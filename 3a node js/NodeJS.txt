@@ -1,0 +1,121 @@
+Listed directory 3a
+Viewed NodeJS.txt:1-100
+Created setup.ps1
+
+I have read the `NodeJS.txt` file and created an automated setup script just like the Angular one.
+
+You will find a new file named **`setup.ps1`** inside your **`D:\downloads\WAD\WAD\3a`** folder.
+
+When anyone right-clicks this `setup.ps1` and selects **"Run with PowerShell"**, it will automatically do the following:
+1. Create a `static-website` folder and navigate inside it.
+2. Create the `public` subfolder for the frontend files.
+3. Write all the required files automatically (`app.js`, `package.json`, `public/index.html`, `public/style.css`).
+4. Run `npm install` to download Express.js.
+5. Automatically open the web browser to `http://localhost:3000`.
+6. Start the Node.js server (`npm start`).
+
+This script is fully ready to be shared with anyone!
+
+====================================================================================================================================================
+
+
+
+```javascript
+// app.js
+
+const express = require("express");
+const path = require("path");
+
+const app = express();
+const PORT = 3000;
+
+// Serve static files from "public" folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
+```
+
+```json
+// package.json
+
+{
+  "name": "static-website",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+```
+
+```html
+<!-- public/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Static Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Welcome to My Website</h1>
+    <p>This is a static website using Node.js and Express.</p>
+
+</body>
+</html>
+```
+
+```css
+/* public/style.css */
+
+body {
+    font-family: Arial;
+    background-color: lightblue;
+    text-align: center;
+    margin-top: 100px;
+}
+
+h1 {
+    color: darkblue;
+}
+```
+
+### Folder Structure
+
+```text
+static-website/
+│
+├── app.js
+├── package.json
+│
+└── public/
+    ├── index.html
+    └── style.css
+```
+
+### Commands to Run
+
+```bash
+npm install
+npm start
+```
+
+Open in browser:
+
+```text
+http://localhost:3000
+```
+
+### Viva Points
+
+* Express is used to create server.
+* `express.static()` is used to serve static files.
+* HTML and CSS files are kept inside `public` folder.
+* Server runs on port 3000.

@@ -1,0 +1,119 @@
+Create version control account on GitHub and using Git commandsto create repository and push your code to GitHub
+
+For SPPU LP2 practicals, they usually expect:
+
+1. Create GitHub account
+2. Create repository
+3. Use Git commands
+4. Push local project to GitHub
+
+Here’s the simplest exam-ready answer.
+
+
+# Step 1: Create GitHub Account
+
+Go to:
+https://github.com
+* Click **Sign Up**
+* Create username and password
+* Verify email
+
+
+
+# Step 2: Create New Repository
+
+After login:
+* Click **New Repository**
+* Repository Name: `wad-practical`
+* Select **Public**
+* Click **Create Repository**
+
+
+
+# Step 3: Open Project Folder in VS Code / Terminal
+
+Example project folder:
+WAD-Practical
+Open terminal inside folder.
+
+
+# Step 4: Git Commands
+
+## Initialize Git
+git init
+
+## Add Files
+git add .
+
+## Commit Files
+git commit -m "First Commit"
+
+## Connect GitHub Repository
+Copy repository URL from GitHub.
+
+Example:
+https://github.com/username/wad-practical.git
+
+Add remote:
+git remote add origin https://github.com/username/wad-practical.git
+
+## Push Code to GitHub
+git branch -M main
+git push -u origin main
+
+# Complete Command Sequence
+
+git init
+
+git add .
+
+git commit -m "First Commit"
+
+git remote add origin https://github.com/username/wad-practical.git
+
+git branch -M main
+
+git push -u origin main
+
+
+# Viva Questions
+
+### What is Git?
+
+> Git is a distributed version control system.
+
+---
+
+### What is GitHub?
+
+> GitHub is a cloud platform used to store Git repositories online.
+
+---
+
+### What does `git init` do?
+
+> Initializes a local Git repository.
+
+---
+
+### What does `git add .` do?
+
+> Adds all files to staging area.
+
+---
+
+### What does `git commit` do?
+
+> Saves snapshot of project changes.
+
+---
+
+### What does `git push` do?
+
+> Uploads local repository code to GitHub repository.
+
+---
+
+### What is repository?
+
+> A repository is a storage space for project files and version history.

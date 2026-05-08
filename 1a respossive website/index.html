@@ -1,0 +1,141 @@
+<!-- Save as index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar p-3">
+            <h3 class="text-center text-white mb-4">Dashboard</h3>
+
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Students</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Exams</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Results</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 p-4">
+
+            <h2 class="mb-4">College Exam Admin Dashboard</h2>
+
+            <!-- Statistics Cards -->
+            <div class="row">
+
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card bg-primary text-white">
+                        <div class="card-body">
+                            <h5>Total Students</h5>
+                            <h3>1200</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card bg-success text-white">
+                        <div class="card-body">
+                            <h5>Total Exams</h5>
+                            <h3>45</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card bg-warning text-dark">
+                        <div class="card-body">
+                            <h5>Results Published</h5>
+                            <h3>38</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card bg-danger text-white">
+                        <div class="card-body">
+                            <h5>Pending Exams</h5>
+                            <h3>7</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Table -->
+            <div class="card mt-4">
+                <div class="card-header bg-dark text-white">
+                    Recent Exam Updates
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Exam Name</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>WAD Practical</td>
+                                <td>10 May 2026</td>
+                                <td>Scheduled</td>
+                            </tr>
+
+                            <tr>
+                                <td>DBMS Theory</td>
+                                <td>12 May 2026</td>
+                                <td>Completed</td>
+                            </tr>
+
+                            <tr>
+                                <td>Computer Networks</td>
+                                <td>15 May 2026</td>
+                                <td>Pending</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

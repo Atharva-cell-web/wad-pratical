@@ -1,0 +1,299 @@
+For Assignment 2C, your Angular frontend already has:
+
+* Register
+* Login
+* Profile
+
+using localStorage. 
+
+Now below is the **simple Node.js + Express.js + MongoDB backend APIs** version that matches your Angular practical.
+
+---
+
+# Assignment 2C Backend APIs
+
+## Features
+
+1. Register User
+2. Login User
+3. Get User Data
+4. Update User Data
+
+Using:
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+
+Simple exam-style code.
+
+---
+
+# Step 1: Create Project
+
+```bash
+mkdir backend
+cd backend
+npm init -y
+```
+
+Install packages:
+
+```bash
+npm install express mongoose cors body-parser
+```
+
+---
+
+# Folder Structure
+
+```text
+backend/
+│
+├── server.js
+├── db.js
+├── models/
+│   └── User.js
+└── routes/
+    └── userRoutes.js
+```
+
+---
+
+# 1. db.js
+
+```javascript
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://127.0.0.1:27017/assignment2c");
+
+const db = mongoose.connection;
+
+db.on("connected", () => {
+    console.log("MongoDB Connected");
+});
+
+db.on("error", () => {
+    console.log("Connection Error");
+});
+
+module.exports = mongoose;
+```
+
+---
+
+# 2. models/User.js
+
+```javascript
+const mongoose = require("../db");
+
+const UserSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: String
+});
+
+module.exports = mongoose.model("User", UserSchema);
+```
+
+---
+
+# 3. routes/userRoutes.js
+
+```javascript
+const express = require("express");
+
+const router = express.Router();
+
+const User = require("../models/User");
+
+
+// Register API
+router.post("/register", async (req, res) => {
+
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    await user.save();
+
+    res.send("User Registered");
+});
+
+
+// Login API
+router.post("/login", async (req, res) => {
+
+    const user = await User.findOne({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    if(user) {
+        res.send(user);
+    }
+    else {
+        res.send("Invalid Email or Password");
+    }
+});
+
+
+// Get User API
+router.get("/user/:id", async (req, res) => {
+
+    const user = await User.findById(req.params.id);
+
+    res.send(user);
+});
+
+
+// Update User API
+router.put("/update/:id", async (req, res) => {
+
+    await User.findByIdAndUpdate(req.params.id, {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    res.send("User Updated");
+});
+
+module.exports = router;
+```
+
+---
+
+# 4. server.js
+
+```javascript
+const express = require("express");
+
+const bodyParser = require("body-parser");
+
+const cors = require("cors");
+
+const app = express();
+
+app.use(cors());
+
+app.use(bodyParser.json());
+
+const userRoutes = require("./routes/userRoutes");
+
+app.use("/", userRoutes);
+
+app.listen(3000, () => {
+    console.log("Server Running on Port 3000");
+});
+```
+
+---
+
+# Run MongoDB
+
+Open MongoDB Compass OR MongoDB service.
+
+---
+
+# Run Server
+
+```bash
+node server.js
+```
+
+Output:
+
+```text
+MongoDB Connected
+Server Running on Port 3000
+```
+
+---
+
+# API URLs
+
+## 1. Register
+
+```text
+POST
+http://localhost:3000/register
+```
+
+Body:
+
+```json
+{
+  "name":"GT",
+  "email":"gt@gmail.com",
+  "password":"123"
+}
+```
+
+---
+
+## 2. Login
+
+```text
+POST
+http://localhost:3000/login
+```
+
+Body:
+
+```json
+{
+  "email":"gt@gmail.com",
+  "password":"123"
+}
+```
+
+---
+
+## 3. Get User
+
+```text
+GET
+http://localhost:3000/user/id
+```
+
+Example:
+
+```text
+http://localhost:3000/user/6657abcd1234
+```
+
+---
+
+## 4. Update User
+
+```text
+PUT
+http://localhost:3000/update/id
+```
+
+Body:
+
+```json
+{
+  "name":"New Name",
+  "email":"new@gmail.com",
+  "password":"111"
+}
+```
+
+---
+
+# Viva Points
+
+* Express used for API creation
+* MongoDB used for database
+* Mongoose used for schema
+* CRUD operations implemented
+* APIs tested using Postman
+* Angular frontend can connect using HttpClient
+
+This is enough for LP2 WAD practical and looks natural/student-written instead of overengineered.
