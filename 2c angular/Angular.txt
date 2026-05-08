@@ -1,0 +1,477 @@
+# Angular LP2 WAD Practical
+
+# Register User, Login User, Show Profile
+
+Simple and clean version for SPPU TE IT practical exam.
+
+---
+npm install -g @angular/cli
+
+# Step 1: Create Project
+
+```bash id="j0c8j8"
+ng new user-auth-app
+```
+
+Choose:
+
+```text id="jlwm3n"
+Would you like to add Angular routing? → Yes
+```
+
+```text id="gw4gl1"
+Which stylesheet format? → CSS
+```
+
+Now open project:
+
+```bash id="mjlwm5"
+cd user-auth-app
+```
+
+Generate components:
+
+```bash id="n2lmhn"
+ng generate component register
+ng generate component login
+ng generate component profile
+```
+
+Run project:
+
+```bash id="1n9cc5"
+ng serve
+```
+
+---
+
+# Final File Structure
+
+```text id="9qkq5l"
+src/
+│
+├── app/
+│   │
+│   ├── register/
+│   │   ├── register.component.ts
+│   │   └── register.component.html
+│   │
+│   ├── login/
+│   │   ├── login.component.ts
+│   │   └── login.component.html
+│   │
+│   ├── profile/
+│   │   ├── profile.component.ts
+│   │   └── profile.component.html
+│   │
+│   ├── app.component.ts
+│   ├── app.component.html
+│   └── app.module.ts
+│
+├── styles.css
+└── main.ts
+```
+
+Use ONLY one CSS file:
+
+* `src/styles.css`
+
+---
+
+# 1. app.module.ts
+
+File:
+
+```text id="nnjlwm"
+src/app/app.module.ts
+```
+
+Code:
+
+```ts id="jlwmqi"
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+
+import { AppComponent } from './app.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+
+const routes: Routes = [
+  { path: '', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent }
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    ProfileComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(routes)
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+---
+
+# 2. app.component.ts
+
+File:
+
+```text id="bnmjlwm"
+src/app/app.component.ts
+```
+
+Code:
+
+```ts id="jlwm9w"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+
+}
+```
+
+---
+
+# 3. app.component.html
+
+File:
+
+```text id="1jlwm7"
+src/app/app.component.html
+```
+
+Code:
+
+```html id="jlwmq3"
+<h1>User Authentication App</h1>
+
+<a routerLink="/">Register</a> |
+<a routerLink="/login">Login</a> |
+<a routerLink="/profile">Profile</a>
+
+<hr>
+
+<router-outlet></router-outlet>
+```
+
+---
+
+# 4. Register Component
+
+## register.component.ts
+
+File:
+
+```text id="0jlwmc"
+src/app/register/register.component.ts
+```
+
+Code:
+
+```ts id="jlwm0f"
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html'
+})
+export class RegisterComponent {
+
+  user = {
+    name: '',
+    email: '',
+    password: ''
+  };
+
+  constructor(private router: Router) {}
+
+  registerUser() {
+
+    localStorage.setItem('user', JSON.stringify(this.user));
+
+    alert("Registration Successful");
+
+    this.router.navigate(['/login']);
+  }
+}
+```
+
+---
+
+## register.component.html
+
+File:
+
+```text id="tjlwmz"
+src/app/register/register.component.html
+```
+
+Code:
+
+```html id="xjlwmx"
+<h2>Register</h2>
+
+<form>
+
+  Name:
+  <br>
+  <input type="text" [(ngModel)]="user.name" name="name">
+
+  <br><br>
+
+  Email:
+  <br>
+  <input type="email" [(ngModel)]="user.email" name="email">
+
+  <br><br>
+
+  Password:
+  <br>
+  <input type="password" [(ngModel)]="user.password" name="password">
+
+  <br><br>
+
+  <button (click)="registerUser()">
+    Register
+  </button>
+
+</form>
+```
+
+---
+
+# 5. Login Component
+
+## login.component.ts
+
+File:
+
+```text id="5jlwmj"
+src/app/login/login.component.ts
+```
+
+Code:
+
+```ts id="hjlwmh"
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html'
+})
+export class LoginComponent {
+
+  email = '';
+  password = '';
+
+  constructor(private router: Router) {}
+
+  loginUser() {
+
+    let data:any = localStorage.getItem('user');
+
+    if(data) {
+
+      let user = JSON.parse(data);
+
+      if(this.email == user.email &&
+         this.password == user.password) {
+
+        alert("Login Successful");
+
+        this.router.navigate(['/profile']);
+
+      } else {
+
+        alert("Invalid Credentials");
+      }
+
+    } else {
+
+      alert("No User Registered");
+    }
+  }
+}
+```
+
+---
+
+## login.component.html
+
+File:
+
+```text id="6jlwmx"
+src/app/login/login.component.html
+```
+
+Code:
+
+```html id="7jlwm8"
+<h2>Login</h2>
+
+<form>
+
+  Email:
+  <br>
+  <input type="email" [(ngModel)]="email" name="email">
+
+  <br><br>
+
+  Password:
+  <br>
+  <input type="password" [(ngModel)]="password" name="password">
+
+  <br><br>
+
+  <button (click)="loginUser()">
+    Login
+  </button>
+
+</form>
+```
+
+---
+
+# 6. Profile Component
+
+## profile.component.ts
+
+File:
+
+```text id="9jlwm4"
+src/app/profile/profile.component.ts
+```
+
+Code:
+
+```ts id="3jlwm2"
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profile.component.html'
+})
+export class ProfileComponent implements OnInit {
+
+  user:any = {};
+
+  ngOnInit() {
+
+    let data:any = localStorage.getItem('user');
+
+    if(data) {
+      this.user = JSON.parse(data);
+    }
+  }
+}
+```
+
+---
+
+## profile.component.html
+
+File:
+
+```text id="4jlwm5"
+src/app/profile/profile.component.html
+```
+
+Code:
+
+```html id="8jlwm9"
+<h2>User Profile</h2>
+
+<p>Name: {{user.name}}</p>
+
+<p>Email: {{user.email}}</p>
+
+<p>Password: {{user.password}}</p>
+```
+
+---
+
+# 7. Global CSS
+
+File:
+
+```text id="jlwm00"
+src/styles.css
+```
+
+Code:
+
+```css id="jlwm11"
+body {
+  font-family: Arial;
+  margin: 20px;
+}
+
+input {
+  width: 220px;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+}
+
+a {
+  margin-right: 10px;
+  text-decoration: none;
+}
+```
+
+---
+
+# Run Project
+
+```bash id="jlwm22"
+ng serve
+```
+
+Open browser:
+
+```text id="jlwm33"
+http://localhost:4200
+```
+
+---
+
+# Viva Points
+
+* Angular uses component architecture
+* Routing used using RouterModule
+* Used `[(ngModel)]` for two-way binding
+* Used localStorage to store user data
+* Components:
+
+  * Register
+  * Login
+  * Profile
+
+This version is:
+
+* simple
+* easy to write
+* clean for exam
+* beginner friendly
+* perfect for LP2 WAD practical exam
